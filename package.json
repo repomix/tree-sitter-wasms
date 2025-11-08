@@ -1,5 +1,5 @@
 {
-  "name": "tree-sitter-wasms",
+  "name": "@repomix/tree-sitter-wasms",
   "version": "0.1.13",
   "description": "Prebuilt WASM binaries for tree-sitter's language parsers.",
   "repository": "https://github.com/Gregoor/tree-sitter-wasms",
