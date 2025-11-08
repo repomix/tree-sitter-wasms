@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
-  '@supercharge/promise-pool':
-    specifier: ^3.1.1
-    version: 3.2.0
   '@types/find-root':
     specifier: ^1.1.4
     version: 1.1.4
@@ -138,11 +135,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@supercharge/promise-pool@3.2.0:
-    resolution: {integrity: sha512-pj0cAALblTZBPtMltWOlZTQSLT07jIaFNeM8TWoJD1cQMgDB9mcMlVMoetiB35OzNJpqQ2b+QEtwiR9f20mADg==}
-    engines: {node: '>=8'}
-    dev: true
 
   /@tsconfig/node10@1.0.11:
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
