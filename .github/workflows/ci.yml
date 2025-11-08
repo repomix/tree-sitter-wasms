@@ -13,7 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: set-matrix
-        run: echo "languages=$(cat languages.json | jq -c)" >> $GITHUB_OUTPUT
+        run: |
+          languages=$(jq -r '[.devDependencies | keys[] | select(startswith("tree-sitter-") and . != "tree-sitter-cli") | sub("tree-sitter-"; "")] | @json' package.json)
+          echo "languages=$languages" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
@@ -69,8 +71,8 @@ jobs:
 
       - name: Verify all WASM files exist
         run: |
-          # Generate expected files list from languages.json
-          languages=$(cat languages.json | jq -r '.[]')
+          # Generate expected files list from package.json
+          languages=$(jq -r '.devDependencies | keys[] | select(startswith("tree-sitter-") and . != "tree-sitter-cli") | sub("tree-sitter-"; "")' package.json)
           expected_files=()
 
           for lang in $languages; do

@@ -8,7 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: set-matrix
-        run: echo "languages=$(cat languages.json | jq -c)" >> $GITHUB_OUTPUT
+        run: |
+          languages=$(jq -r '[.devDependencies | keys[] | select(startswith("tree-sitter-") and . != "tree-sitter-cli") | sub("tree-sitter-"; "")] | @json' package.json)
+          echo "languages=$languages" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
