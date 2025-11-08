@@ -69,7 +69,6 @@ const packageName = langArg.startsWith("tree-sitter-")
 		} else {
 			await buildParserWASM(packageName);
 		}
-		await exec(`mv *.wasm ${outDir}`, { cwd: __dirname });
 	} catch (e) {
 		console.error(`🔥 Build failed:\n`, e);
 		process.exit(1);
