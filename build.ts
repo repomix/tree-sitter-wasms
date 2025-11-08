@@ -57,7 +57,10 @@ function ensureTreeSitterJson(packagePath: string, packageName: string) {
 		},
 	};
 
-	fs.writeFileSync(treeSitterJsonPath, JSON.stringify(treeSitterConfig, null, 2));
+	fs.writeFileSync(
+		treeSitterJsonPath,
+		JSON.stringify(treeSitterConfig, null, 2),
+	);
 	console.log(`📝 Created tree-sitter.json for ${packageName}`);
 }
 
