@@ -31,8 +31,9 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 24
+          cache: "npm"
 
-      - run: npm install
+      - run: npm ci
 
       - name: Rebuild tree-sitter-cli to install binary
         run: npm rebuild tree-sitter-cli
