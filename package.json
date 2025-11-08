@@ -19,7 +19,7 @@
 	},
 	"devDependencies": {
 		"@types/find-root": "^1.1.4",
-		"@types/node": "^20.11.17",
+		"@types/node": "^22.10.0",
 		"find-root": "^1.1.0",
 		"tree-sitter-c": "^0.20.7",
 		"tree-sitter-c-sharp": "^0.20.0",
@@ -39,7 +39,7 @@
 		"tree-sitter-typescript": "^0.20.5",
 		"tree-sitter-vue": "https://github.com/tree-sitter-grammars/tree-sitter-vue#7e48557b903a9db9c38cea3b7839ef7e1f36c693",
 		"ts-node": "^10.9.2",
-		"typescript": "5.3.3"
+		"typescript": "^5.9.3"
 	},
 	"files": [
 		"/out"
