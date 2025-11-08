@@ -2,8 +2,8 @@
   "name": "@repomix/tree-sitter-wasms",
   "version": "0.1.13",
   "description": "Prebuilt WASM binaries for tree-sitter's language parsers.",
-  "repository": "https://github.com/Gregoor/tree-sitter-wasms",
-  "author": "Gregor <gregorwbr@gmail.com>, Menci <huanghaorui301@gmail.com>",
+  "repository": "https://github.com/repomix/tree-sitter-wasms",
+  "author": "yamadashy <koukun0120@gmail.com>, Gregor <gregorwbr@gmail.com>, Menci <huanghaorui301@gmail.com>",
   "license": "Unlicense",
   "publishConfig": {
     "access": "public"
