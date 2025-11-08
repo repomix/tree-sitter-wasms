@@ -10,7 +10,7 @@ jobs:
       - id: set-matrix
         run: |
           languages=$(jq -r '[.devDependencies | keys[] | select(startswith("tree-sitter-") and . != "tree-sitter-cli") | sub("tree-sitter-"; "")] | @json' package.json)
-          echo "languages=$languages" >> $GITHUB_OUTPUT
+          echo "languages=$languages" >> "$GITHUB_OUTPUT"
 
   build:
     runs-on: ubuntu-latest
