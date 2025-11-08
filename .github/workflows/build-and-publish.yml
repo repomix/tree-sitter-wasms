@@ -26,6 +26,7 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 24
+          cache: "npm"
 
       - run: npm install
 
@@ -59,6 +60,7 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 24
+          cache: "npm"
           registry-url: "https://registry.npmjs.org"
 
       - name: Update npm to latest version
