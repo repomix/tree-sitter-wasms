@@ -13,7 +13,7 @@ if (!langArg) {
 	process.exit(1);
 }
 
-const exec = util.promisify(require("node:child_process").exec);
+const execFile = util.promisify(require("node:child_process").execFile);
 
 const outDir = path.join(__dirname, "out");
 
@@ -31,9 +31,9 @@ async function buildParserWASM(
 	}
 	const cwd = subPath ? path.join(packagePath, subPath) : packagePath;
 	if (generate) {
-		await exec(`npx tree-sitter generate`, { cwd });
+		await execFile("npx", ["tree-sitter", "generate"], { cwd });
 	}
-	await exec(`npx tree-sitter build --wasm ${cwd}`);
+	await execFile("npx", ["tree-sitter", "build", "--wasm", cwd]);
 	console.log(`✅ Finished building ${label}`);
 }
 
