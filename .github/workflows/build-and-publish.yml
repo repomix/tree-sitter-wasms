@@ -16,6 +16,10 @@ jobs:
           node-version: 20
           cache: "pnpm"
           registry-url: "https://registry.npmjs.org"
+
+      - name: Update npm to latest version
+        run: npm install -g npm@latest
+
       - run: pnpm install
 
       - uses: mymindstorm/setup-emsdk@v11
@@ -24,7 +28,5 @@ jobs:
 
       - run: pnpm build
 
-      - name: Publish to npm with provenance
+      - name: Publish to npm with OIDC and provenance
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
