@@ -33,7 +33,7 @@ async function buildParserWASM(
 	if (generate) {
 		await exec(`npx tree-sitter generate`, { cwd });
 	}
-	await exec(`npx tree-sitter build-wasm ${cwd}`);
+	await exec(`npx tree-sitter build --wasm ${cwd}`);
 	console.log(`✅ Finished building ${label}`);
 }
 
