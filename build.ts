@@ -41,17 +41,23 @@ async function buildParserWASM(
   }
 }
 
-if (fs.existsSync(outDir)) {
-  fs.rmSync(outDir, { recursive: true, force: true });
+// Ensure output directory exists (don't delete if it exists, for parallel builds)
+if (!fs.existsSync(outDir)) {
+  fs.mkdirSync(outDir);
 }
-
-fs.mkdirSync(outDir);
 
 process.chdir(outDir);
 
+// Normalize language argument to package name
+const targetPackage = langArg
+  ? langArg.startsWith("tree-sitter-")
+    ? langArg
+    : `tree-sitter-${langArg}`
+  : null;
+
 const grammars = Object.keys(packageInfo.devDependencies)
   .filter((n) => n.startsWith("tree-sitter-") && n !== "tree-sitter-cli")
-  .filter((s) => !langArg || s.includes(langArg));
+  .filter((s) => !targetPackage || s === targetPackage);
 
 PromisePool.withConcurrency(os.cpus().length)
   .for(grammars)

@@ -1,5 +1,10 @@
-name: build-and-publish
-on: workflow_dispatch
+name: CI
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -41,29 +46,13 @@ jobs:
         with:
           name: wasm-${{ matrix.language }}
           path: out/*.wasm
-          retention-days: 1
+          retention-days: 7
 
-  publish:
+  verify:
     runs-on: ubuntu-latest
     needs: build
-    permissions:
-      contents: read
-      id-token: write
     steps:
       - uses: actions/checkout@v3
-
-      - uses: pnpm/action-setup@v2
-      - name: Install Node.js with pnpm
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: "pnpm"
-          registry-url: "https://registry.npmjs.org"
-
-      - name: Update npm to latest version
-        run: npm install -g npm@latest
-
-      - run: pnpm install
 
       - name: Download all WASM artifacts
         uses: actions/download-artifact@v4
@@ -75,5 +64,35 @@ jobs:
       - name: List built WASM files
         run: ls -lh out/
 
-      - name: Publish to npm with OIDC and provenance
-        run: npm publish --provenance --access public
+      - name: Verify all WASM files exist
+        run: |
+          # Generate expected files list from languages.json
+          languages=$(cat languages.json | jq -r '.[]')
+          expected_files=()
+
+          for lang in $languages; do
+            # Handle special cases
+            if [ "$lang" = "typescript" ]; then
+              expected_files+=("tree-sitter-typescript.wasm")
+              expected_files+=("tree-sitter-tsx.wasm")
+            elif [ "$lang" = "c-sharp" ]; then
+              expected_files+=("tree-sitter-c_sharp.wasm")
+            else
+              expected_files+=("tree-sitter-${lang}.wasm")
+            fi
+          done
+
+          missing_files=()
+          for file in "${expected_files[@]}"; do
+            if [ ! -f "out/$file" ]; then
+              missing_files+=("$file")
+            fi
+          done
+
+          if [ ${#missing_files[@]} -gt 0 ]; then
+            echo "❌ Missing WASM files:"
+            printf '  - %s\n' "${missing_files[@]}"
+            exit 1
+          fi
+
+          echo "✅ All expected WASM files are present (${#expected_files[@]} files)"
