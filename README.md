@@ -1,5 +1,10 @@
 # @repomix/tree-sitter-wasms
-Prebuilt WASM binaries for tree-sitter's language parsers. Forked from https://github.com/Menci/tree-sitter-wasm-prebuilt because I wanted to use GitHub Actions to automate publishing.
+
+Prebuilt WASM binaries for tree-sitter's language parsers.
+
+Forked from [tree-sitter-wasms](https://github.com/Gregoor/tree-sitter-wasms) to include only the languages needed for Repomix.
+
+**NPM Package**: https://www.npmjs.com/package/@repomix/tree-sitter-wasms
 
 ## Installation
 
@@ -20,4 +25,23 @@ parser.setLanguage(treeSitterCpp);
 
 ## Supported Languages
 
-Check https://unpkg.com/browse/@repomix/tree-sitter-wasms@latest/out/ to see all supported languages, and manually download the wasm artifacts directly.
+This package includes WASM binaries for the following languages:
+
+- JavaScript (.js, .jsx, .cjs, .mjs, .mjsx)
+- TypeScript (.ts, .tsx, .mts, .mtsx, .ctx)
+- C (.c, .h)
+- C++ (.cpp, .hpp)
+- Python (.py)
+- Rust (.rs)
+- Java (.java)
+- Go (.go)
+- C# (.cs)
+- Ruby (.rb)
+- PHP (.php)
+- Swift (.swift)
+- CSS (.css)
+- Solidity (.sol)
+- Vue (.vue)
+- Dart (.dart)
+
+You can also browse all available WASM files at https://unpkg.com/browse/@repomix/tree-sitter-wasms@latest/out/
