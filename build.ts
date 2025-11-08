@@ -17,6 +17,50 @@ const execFile = util.promisify(require("node:child_process").execFile);
 
 const outDir = path.join(__dirname, "out");
 
+function ensureTreeSitterJson(packagePath: string, packageName: string) {
+	const treeSitterJsonPath = path.join(packagePath, "tree-sitter.json");
+	if (fs.existsSync(treeSitterJsonPath)) {
+		return; // File already exists
+	}
+
+	// Extract language name from package name (e.g., "tree-sitter-dart" -> "dart")
+	const langName = packageName.replace(/^tree-sitter-/, "");
+	const capitalizedLangName =
+		langName.charAt(0).toUpperCase() + langName.slice(1);
+
+	// Read version from package.json if available
+	let version = "1.0.0";
+	const packageJsonPath = path.join(packagePath, "package.json");
+	if (fs.existsSync(packageJsonPath)) {
+		try {
+			const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+			version = packageJson.version || version;
+		} catch {
+			// Use default version if package.json is not readable
+		}
+	}
+
+	// Create minimal tree-sitter.json
+	const treeSitterConfig = {
+		grammars: [
+			{
+				name: langName,
+				camelcase: capitalizedLangName,
+				scope: `source.${langName}`,
+				path: ".",
+				"file-types": [langName],
+			},
+		],
+		metadata: {
+			version,
+			license: "MIT",
+		},
+	};
+
+	fs.writeFileSync(treeSitterJsonPath, JSON.stringify(treeSitterConfig, null, 2));
+	console.log(`📝 Created tree-sitter.json for ${packageName}`);
+}
+
 async function buildParserWASM(
 	name: string,
 	{ subPath, generate }: { subPath?: string; generate?: boolean } = {},
@@ -30,6 +74,10 @@ async function buildParserWASM(
 		packagePath = path.join(__dirname, "node_modules", name);
 	}
 	const cwd = subPath ? path.join(packagePath, subPath) : packagePath;
+
+	// Ensure tree-sitter.json exists before building
+	ensureTreeSitterJson(cwd, name);
+
 	if (generate) {
 		await execFile("npx", ["tree-sitter", "generate"], { cwd });
 	}
