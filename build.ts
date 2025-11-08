@@ -8,8 +8,8 @@ const langArg = process.argv[2];
 
 if (!langArg) {
   console.error("Error: Language argument is required");
-  console.error("Usage: pnpm build <language>");
-  console.error("Example: pnpm build javascript");
+  console.error("Usage: npm run build <language>");
+  console.error("Example: npm run build javascript");
   process.exit(1);
 }
 
@@ -31,9 +31,9 @@ async function buildParserWASM(
   }
   const cwd = subPath ? path.join(packagePath, subPath) : packagePath;
   if (generate) {
-    await exec(`pnpm tree-sitter generate`, { cwd });
+    await exec(`npx tree-sitter generate`, { cwd });
   }
-  await exec(`pnpm tree-sitter build-wasm ${cwd}`);
+  await exec(`npx tree-sitter build-wasm ${cwd}`);
   console.log(`✅ Finished building ${label}`);
 }
 

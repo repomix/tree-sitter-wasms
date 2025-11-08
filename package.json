@@ -38,6 +38,5 @@
   "files": [
     "/out"
   ],
-  "packageManager": "pnpm@8.10.5",
   "main": "bindings/node"
 }
