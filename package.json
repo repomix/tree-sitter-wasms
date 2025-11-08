@@ -1,44 +1,53 @@
 {
-  "name": "@repomix/tree-sitter-wasms",
-  "version": "0.1.14",
-  "description": "Prebuilt WASM binaries for tree-sitter's language parsers.",
-  "repository": "https://github.com/repomix/tree-sitter-wasms",
-  "author": "yamadashy <koukun0120@gmail.com>, Gregor <gregorwbr@gmail.com>, Menci <huanghaorui301@gmail.com>",
-  "license": "Unlicense",
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "build": "ts-node build.ts"
-  },
-  "devDependencies": {
-    "@supercharge/promise-pool": "^3.1.1",
-    "@types/find-root": "^1.1.4",
-    "@types/node": "^20.11.17",
-    "find-root": "^1.1.0",
-    "tree-sitter-c": "^0.20.7",
-    "tree-sitter-c-sharp": "^0.20.0",
-    "tree-sitter-cli": "^0.20.8",
-    "tree-sitter-cpp": "^0.20.4",
-    "tree-sitter-css": "^0.20.0",
-    "tree-sitter-dart": "github:UserNobody14/tree-sitter-dart",
-    "tree-sitter-go": "^0.20.0",
-    "tree-sitter-java": "^0.20.2",
-    "tree-sitter-javascript": "^0.20.3",
-    "tree-sitter-php": "^0.22.0",
-    "tree-sitter-python": "^0.21.0",
-    "tree-sitter-ruby": "^0.20.1",
-    "tree-sitter-rust": "^0.20.4",
-    "tree-sitter-solidity": "github:JoranHonig/tree-sitter-solidity#b239a95f94cfcc6e7b3e961bc73a28d55e214f02",
-    "tree-sitter-swift": "^0.4.0",
-    "tree-sitter-typescript": "^0.20.5",
-    "tree-sitter-vue": "https://github.com/tree-sitter-grammars/tree-sitter-vue#7e48557b903a9db9c38cea3b7839ef7e1f36c693",
-    "ts-node": "^10.9.2",
-    "typescript": "5.3.3"
-  },
-  "files": [
-    "/out"
-  ],
-  "packageManager": "pnpm@8.10.5",
-  "main": "bindings/node"
+	"name": "@repomix/tree-sitter-wasms",
+	"version": "0.1.14",
+	"description": "Prebuilt WASM binaries for tree-sitter's language parsers.",
+	"repository": "https://github.com/repomix/tree-sitter-wasms",
+	"author": "yamadashy <koukun0120@gmail.com>, Gregor <gregorwbr@gmail.com>, Menci <huanghaorui301@gmail.com>",
+	"license": "Unlicense",
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "ts-node build.ts",
+		"lint": "node --run lint-biome && node --run lint-oxlint && node --run lint-ts",
+		"lint-biome": "biome check --write",
+		"lint-oxlint": "oxlint --fix",
+		"lint-ts": "tsgo --noEmit",
+		"pinact-run": "pinact run",
+		"pinact-check": "pinact run --check"
+	},
+	"devDependencies": {
+		"@types/find-root": "^1.1.4",
+		"@types/node": "^22.10.0",
+		"find-root": "^1.1.0",
+		"tree-sitter-c": "^0.20.7",
+		"tree-sitter-c-sharp": "^0.20.0",
+		"tree-sitter-cli": "^0.20.8",
+		"tree-sitter-cpp": "^0.20.4",
+		"tree-sitter-css": "^0.20.0",
+		"tree-sitter-dart": "github:UserNobody14/tree-sitter-dart",
+		"tree-sitter-go": "^0.20.0",
+		"tree-sitter-java": "^0.20.2",
+		"tree-sitter-javascript": "^0.20.3",
+		"tree-sitter-php": "^0.22.0",
+		"tree-sitter-python": "^0.21.0",
+		"tree-sitter-ruby": "^0.20.1",
+		"tree-sitter-rust": "^0.20.4",
+		"tree-sitter-solidity": "github:JoranHonig/tree-sitter-solidity#b239a95f94cfcc6e7b3e961bc73a28d55e214f02",
+		"tree-sitter-swift": "^0.4.0",
+		"tree-sitter-typescript": "^0.20.5",
+		"tree-sitter-vue": "https://github.com/tree-sitter-grammars/tree-sitter-vue#7e48557b903a9db9c38cea3b7839ef7e1f36c693",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.9.3"
+	},
+	"files": [
+		"/out"
+	],
+	"main": "bindings/node",
+	"dependencies": {
+		"@biomejs/biome": "^2.3.4",
+		"@typescript/native-preview": "^7.0.0-dev.20251108.1",
+		"oxlint": "^1.26.0"
+	}
 }
