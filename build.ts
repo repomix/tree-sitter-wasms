@@ -56,6 +56,13 @@ const packageName = langArg.startsWith("tree-sitter-")
     } else if (packageName === "tree-sitter-typescript") {
       await buildParserWASM(packageName, { subPath: "typescript" });
       await buildParserWASM(packageName, { subPath: "tsx" });
+    } else if (
+      ["tree-sitter-dart", "tree-sitter-solidity", "tree-sitter-swift", "tree-sitter-vue"].includes(
+        packageName
+      )
+    ) {
+      // These packages are installed from GitHub and need grammar generation
+      await buildParserWASM(packageName, { generate: true });
     } else {
       await buildParserWASM(packageName);
     }
