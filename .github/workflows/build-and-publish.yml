@@ -22,23 +22,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Node.js
+      - uses: pnpm/action-setup@v2
+      - name: Install Node.js with pnpm
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: "npm"
+          cache: "pnpm"
 
-      - run: npm install
+      - run: pnpm install
 
       - name: Rebuild tree-sitter-cli to install binary
-        run: npm rebuild tree-sitter-cli
+        run: pnpm rebuild tree-sitter-cli
 
       - uses: mymindstorm/setup-emsdk@v11
         with:
           version: 2.0.24
 
       - name: Build ${{ matrix.language }}
-        run: npm run build ${{ matrix.language }}
+        run: pnpm build ${{ matrix.language }}
 
       - name: Upload WASM artifacts
         uses: actions/upload-artifact@v4
@@ -56,17 +57,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Node.js
+      - uses: pnpm/action-setup@v2
+      - name: Install Node.js with pnpm
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: "npm"
+          cache: "pnpm"
           registry-url: "https://registry.npmjs.org"
 
       - name: Update npm to latest version
         run: npm install -g npm@latest
 
-      - run: npm install
+      - run: pnpm install
 
       - name: Download all WASM artifacts
         uses: actions/download-artifact@v4
