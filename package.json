@@ -5,6 +5,9 @@
   "repository": "https://github.com/Gregoor/tree-sitter-wasms",
   "author": "Gregor <gregorwbr@gmail.com>, Menci <huanghaorui301@gmail.com>",
   "license": "Unlicense",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "ts-node build.ts"
   },
