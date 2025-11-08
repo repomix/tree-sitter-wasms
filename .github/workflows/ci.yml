@@ -27,24 +27,23 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2
-      - name: Install Node.js with pnpm
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: "pnpm"
+          cache: "npm"
 
-      - run: pnpm install
+      - run: npm install
 
       - name: Rebuild tree-sitter-cli to install binary
-        run: pnpm rebuild tree-sitter-cli
+        run: npm rebuild tree-sitter-cli
 
       - uses: mymindstorm/setup-emsdk@v11
         with:
           version: 2.0.24
 
       - name: Build ${{ matrix.language }}
-        run: pnpm build ${{ matrix.language }}
+        run: npm run build ${{ matrix.language }}
 
       - name: Upload WASM artifacts
         uses: actions/upload-artifact@v4
