@@ -35,8 +35,11 @@ function ensureTreeSitterJson(packagePath: string, packageName: string) {
 		try {
 			const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
 			version = packageJson.version || version;
-		} catch {
-			// Use default version if package.json is not readable
+		} catch (error) {
+			console.warn(
+				`⚠️  Could not read or parse ${packageJsonPath}. Using default version.`,
+				error,
+			);
 		}
 	}
 
