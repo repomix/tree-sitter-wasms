@@ -18,9 +18,12 @@
 		"pinact-check": "pinact run --check"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "^2.3.4",
 		"@types/find-root": "^1.1.4",
 		"@types/node": "^24.10.0",
+		"@typescript/native-preview": "^7.0.0-dev.20251108.1",
 		"find-root": "^1.1.0",
+		"oxlint": "^1.26.0",
 		"tree-sitter-c": "^0.24.1",
 		"tree-sitter-c-sharp": "^0.23.1",
 		"tree-sitter-cli": "^0.25.10",
@@ -44,10 +47,5 @@
 	"files": [
 		"/out"
 	],
-	"main": "bindings/node",
-	"dependencies": {
-		"@biomejs/biome": "^2.3.4",
-		"@typescript/native-preview": "^7.0.0-dev.20251108.1",
-		"oxlint": "^1.26.0"
-	}
+	"main": "bindings/node"
 }
