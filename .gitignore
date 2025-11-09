@@ -1,2 +1,4 @@
 out/
 node_modules/
+tree-sitter
+tree-sitter.exe
