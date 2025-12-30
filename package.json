@@ -26,7 +26,7 @@
 		"oxlint": "^1.26.0",
 		"tree-sitter-c": "^0.24.1",
 		"tree-sitter-c-sharp": "^0.23.1",
-		"tree-sitter-cli": "^0.25.10",
+		"tree-sitter-cli": "^0.26.3",
 		"tree-sitter-cpp": "^0.23.4",
 		"tree-sitter-css": "^0.25.0",
 		"tree-sitter-dart": "github:UserNobody14/tree-sitter-dart",
