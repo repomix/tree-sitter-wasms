@@ -37,14 +37,14 @@ The build process is orchestrated by [build.ts](build.ts), which:
 
 1. Takes a language name as a required CLI argument
 2. Resolves the package path using `find-root`
-3. Runs `tree-sitter build-wasm` to generate WASM binaries
+3. Runs `tree-sitter build --wasm` to generate WASM binaries (uses wasi-sdk, no emscripten required)
 4. Outputs to the `out/` directory
 
 ### Language Categories
 
 Languages are handled differently based on their source:
 
-1. **Standard languages** (from npm): Built directly with `tree-sitter build-wasm`
+1. **Standard languages** (from npm): Built directly with `tree-sitter build --wasm`
    - Examples: c, c-sharp, cpp, css, go, java, javascript, python, ruby, rust
 
 2. **Languages from GitHub** (require grammar generation):
