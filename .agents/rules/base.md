@@ -2,6 +2,8 @@
 
 This repository builds prebuilt WASM binaries for tree-sitter language parsers. It's forked from [tree-sitter-wasms](https://github.com/Gregoor/tree-sitter-wasms) and maintained specifically for Repomix, including only the languages needed for that project.
 
+**Important**: This is a fork. When creating PRs with `gh pr create`, make sure to target `repomix/tree-sitter-wasms`, not the upstream `Gregoor/tree-sitter-wasms`. The default repository is configured via `gh repo set-default` (stored in `.git/config`, local only).
+
 The supported languages are defined in `package.json` as `devDependencies` starting with `tree-sitter-*` (excluding `tree-sitter-cli`).
 
 ## Commands
