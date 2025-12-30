@@ -38,10 +38,6 @@ jobs:
       - name: Rebuild tree-sitter-cli to install binary
         run: npm rebuild tree-sitter-cli --ignore-scripts=false
 
-      - uses: mymindstorm/setup-emsdk@29ba4851d6da084ffdc1e0fc390efadbd75df9d1 # v11
-        with:
-          version: 2.0.24
-
       - name: Build ${{ matrix.language }}
         run: npm run build ${{ matrix.language }}
 
