@@ -1,8 +1,9 @@
+import { execFile as execFileCallback } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import util from "node:util";
+import { promisify } from "node:util";
 
-const findRoot = require("find-root");
+const execFile = promisify(execFileCallback);
 
 const langArg = process.argv[2];
 
@@ -13,9 +14,21 @@ if (!langArg) {
 	process.exit(1);
 }
 
-const execFile = util.promisify(require("node:child_process").execFile);
+const outDir = path.join(import.meta.dirname, "out");
 
-const outDir = path.join(__dirname, "out");
+/**
+ * Find the root directory of a package by searching for package.json
+ */
+function findPackageRoot(startPath: string): string {
+	let dir = startPath;
+	while (dir !== path.dirname(dir)) {
+		if (fs.existsSync(path.join(dir, "package.json"))) {
+			return dir;
+		}
+		dir = path.dirname(dir);
+	}
+	throw new Error(`Could not find package root from ${startPath}`);
+}
 
 function ensureTreeSitterJson(packagePath: string, packageName: string) {
 	const treeSitterJsonPath = path.join(packagePath, "tree-sitter.json");
@@ -73,12 +86,19 @@ async function buildParserWASM(
 ) {
 	const label = subPath ? path.join(name, subPath) : name;
 	console.log(`⏳ Building ${label}`);
+
 	let packagePath: string;
 	try {
-		packagePath = findRoot(require.resolve(name));
+		const resolvedPath = import.meta.resolve(name);
+		// import.meta.resolve returns a file URL, convert to path
+		const filePath = resolvedPath.startsWith("file://")
+			? resolvedPath.slice(7)
+			: resolvedPath;
+		packagePath = findPackageRoot(path.dirname(filePath));
 	} catch {
-		packagePath = path.join(__dirname, "node_modules", name);
+		packagePath = path.join(import.meta.dirname, "node_modules", name);
 	}
+
 	const cwd = subPath ? path.join(packagePath, subPath) : packagePath;
 
 	// Ensure tree-sitter.json exists before building
@@ -103,28 +123,26 @@ const packageName = langArg.startsWith("tree-sitter-")
 	? langArg
 	: `tree-sitter-${langArg}`;
 
-(async () => {
-	try {
-		if (packageName === "tree-sitter-php") {
-			await buildParserWASM(packageName, { subPath: "php" });
-		} else if (packageName === "tree-sitter-typescript") {
-			await buildParserWASM(packageName, { subPath: "typescript" });
-			await buildParserWASM(packageName, { subPath: "tsx" });
-		} else if (
-			[
-				"tree-sitter-dart",
-				"tree-sitter-solidity",
-				"tree-sitter-swift",
-				"tree-sitter-vue",
-			].includes(packageName)
-		) {
-			// These packages are installed from GitHub and need grammar generation
-			await buildParserWASM(packageName, { generate: true });
-		} else {
-			await buildParserWASM(packageName);
-		}
-	} catch (e) {
-		console.error(`🔥 Build failed:\n`, e);
-		process.exit(1);
+try {
+	if (packageName === "tree-sitter-php") {
+		await buildParserWASM(packageName, { subPath: "php" });
+	} else if (packageName === "tree-sitter-typescript") {
+		await buildParserWASM(packageName, { subPath: "typescript" });
+		await buildParserWASM(packageName, { subPath: "tsx" });
+	} else if (
+		[
+			"tree-sitter-dart",
+			"tree-sitter-solidity",
+			"tree-sitter-swift",
+			"tree-sitter-vue",
+		].includes(packageName)
+	) {
+		// These packages are installed from GitHub and need grammar generation
+		await buildParserWASM(packageName, { generate: true });
+	} else {
+		await buildParserWASM(packageName);
 	}
-})();
+} catch (e) {
+	console.error(`🔥 Build failed:\n`, e);
+	process.exit(1);
+}
