@@ -1,6 +1,7 @@
 import { execFile as execFileCallback } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
 const execFile = promisify(execFileCallback);
@@ -21,11 +22,15 @@ const outDir = path.join(import.meta.dirname, "out");
  */
 function findPackageRoot(startPath: string): string {
 	let dir = startPath;
-	while (dir !== path.dirname(dir)) {
+	while (true) {
 		if (fs.existsSync(path.join(dir, "package.json"))) {
 			return dir;
 		}
-		dir = path.dirname(dir);
+		const parent = path.dirname(dir);
+		if (parent === dir) {
+			break;
+		}
+		dir = parent;
 	}
 	throw new Error(`Could not find package root from ${startPath}`);
 }
@@ -90,10 +95,7 @@ async function buildParserWASM(
 	let packagePath: string;
 	try {
 		const resolvedPath = import.meta.resolve(name);
-		// import.meta.resolve returns a file URL, convert to path
-		const filePath = resolvedPath.startsWith("file://")
-			? resolvedPath.slice(7)
-			: resolvedPath;
+		const filePath = fileURLToPath(resolvedPath);
 		packagePath = findPackageRoot(path.dirname(filePath));
 	} catch {
 		packagePath = path.join(import.meta.dirname, "node_modules", name);
