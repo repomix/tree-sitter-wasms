@@ -1,6 +1,7 @@
 {
 	"name": "@repomix/tree-sitter-wasms",
 	"version": "0.1.15",
+	"type": "module",
 	"description": "Prebuilt WASM binaries for tree-sitter's language parsers.",
 	"repository": "https://github.com/repomix/tree-sitter-wasms",
 	"author": "yamadashy <koukun0120@gmail.com>, Gregor <gregorwbr@gmail.com>, Menci <huanghaorui301@gmail.com>",
@@ -9,7 +10,7 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "ts-node build.ts",
+		"build": "tsx build.ts",
 		"lint": "node --run lint-biome && node --run lint-oxlint && node --run lint-ts",
 		"lint-biome": "biome check --write",
 		"lint-oxlint": "oxlint --fix",
@@ -19,10 +20,8 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.4",
-		"@types/find-root": "^1.1.4",
 		"@types/node": "^24.10.0",
 		"@typescript/native-preview": "^7.0.0-dev.20251108.1",
-		"find-root": "^1.1.0",
 		"oxlint": "^1.26.0",
 		"tree-sitter-c": "^0.24.1",
 		"tree-sitter-c-sharp": "^0.23.1",
@@ -41,7 +40,7 @@
 		"tree-sitter-swift": "^0.7.1",
 		"tree-sitter-typescript": "^0.23.2",
 		"tree-sitter-vue": "https://github.com/tree-sitter-grammars/tree-sitter-vue#22bdfa6c9fc0f5ffa44c6e938ec46869ac8a99ff",
-		"ts-node": "^10.9.2",
+		"tsx": "^4.21.0",
 		"typescript": "^5.9.3"
 	},
 	"files": [

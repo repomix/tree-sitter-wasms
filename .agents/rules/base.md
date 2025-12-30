@@ -36,7 +36,7 @@ npm run lint-ts           # TypeScript type checking only (no emit)
 The build process is orchestrated by [build.ts](build.ts), which:
 
 1. Takes a language name as a required CLI argument
-2. Resolves the package path using `find-root`
+2. Resolves the package path using `import.meta.resolve`
 3. Runs `tree-sitter build --wasm` to generate WASM binaries (uses wasi-sdk, no emscripten required)
 4. Outputs to the `out/` directory
 
@@ -81,4 +81,4 @@ Some tree-sitter packages are installed from GitHub and have peer dependency con
 
 - **Node.js**: Version 24 (specified in workflows)
 - **TypeScript**: Configured for Node.js 24 with ES2024 target and `nodenext` module resolution
-- The build script uses CommonJS with ts-node for execution
+- The build script uses ESM with tsx for execution
