@@ -2,7 +2,7 @@ name: build-and-publish
 on: workflow_dispatch
 jobs:
   setup:
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-24.04-arm
     outputs:
       languages: ${{ steps.set-matrix.outputs.languages }}
     steps:
@@ -13,7 +13,7 @@ jobs:
           echo "languages=$languages" >> "$GITHUB_OUTPUT"
 
   build:
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-24.04-arm
     needs: setup
     strategy:
       fail-fast: false
@@ -44,7 +44,7 @@ jobs:
           retention-days: 1
 
   publish:
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-24.04-arm
     needs: build
     permissions:
       contents: read
